@@ -7,7 +7,7 @@
     "jsx": "react-jsx",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "module": "ESNext",
+    // "module": "ESNext",
     "target": "ES2019",
     "strict": true,
     "allowJs": true,
@@ -17,6 +17,8 @@
       "~/*": ["./app/*"],
       "@/*": ["./app/*"]
     },
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
 
     // Remix takes care of building everything in `remix build`.
     "noEmit": true

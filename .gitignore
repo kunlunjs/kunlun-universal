@@ -110,3 +110,5 @@ pnpm-lock.yml
 yarn.lock
 build
 public/build
+postgres-data
+server-dist

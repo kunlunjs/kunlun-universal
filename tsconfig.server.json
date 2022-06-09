@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["server"],
+  "exclude": ["app"],
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES2017",
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./server/*"],
+      "@/*": ["./server/*"]
+    },
+    "noEmit": false,
+    "outDir": "server-dist"
+  }
+}

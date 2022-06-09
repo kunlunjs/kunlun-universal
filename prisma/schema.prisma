@@ -1,0 +1,188 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+/// 用户
+model User {
+  id         String      @id @default(cuid())
+  email      String?     @unique
+  mobile     String      @unique
+  password   Password?
+  notes      Note[]
+  components Component[]
+  snippets   Snippet[]
+  tools      Tool[]
+  createdAt  DateTime    @default(now()) @map("created_at")
+  updatedAt  DateTime    @updatedAt @map("updated_at")
+  deletedAt  DateTime?   @map("deleted_at")
+
+  @@map("user")
+}
+
+/// 密码
+model Password {
+  hash   String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String @unique
+
+  @@map("password")
+}
+
+/// 分类
+model Category {
+  id        String    @id @default(cuid())
+  name      String
+  notes     Note[]
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("category")
+}
+
+/// 文章
+model Note {
+  id        String     @id @default(cuid())
+  title     String
+  subTitle  String?    @map("sub_title")
+  banner    String?
+  // 封面
+  cover     String?
+  body      String?
+  category  Category[]
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId    String
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+  deletedAt DateTime?  @map("deleted_at")
+
+  @@map("note")
+}
+
+/// 组件
+model Component {
+  id        String    @id @default(cuid())
+  title     String
+  subTitle  String?   @map("sub_title")
+  banner    String?
+  cover     String?
+  body      String?
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId    String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("component")
+}
+
+/// 代码片段语言
+enum ECodeLanguage {
+  CSS
+  HTML
+  Go
+  Java
+  Shell
+  Python
+  JavaScript
+  TypeScript
+}
+
+/// 代码片段
+model Snippet {
+  id        String        @id @default(cuid())
+  language  ECodeLanguage
+  body      Json?
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId    String
+  createdAt DateTime      @default(now()) @map("created_at")
+  updatedAt DateTime      @updatedAt @map("updated_at")
+  deletedAt DateTime?     @map("deleted_at")
+
+  @@map("snippet")
+}
+
+/// 工具类型
+enum ETool {
+  /// IDE
+  IDE
+  /// 媒体工具
+  Media
+  /// 系统工具
+  System
+  /// 图形设计
+  Design
+  /// 编辑器
+  Editor
+  /// 应用软件
+  Application
+  /// 编程开发
+  Programming
+}
+
+enum EPlatform {
+  Mac
+  Linux
+  Windows
+}
+
+/// 工具
+model Tool {
+  id          String    @id @default(cuid())
+  name        String
+  icon        String?
+  url         String
+  platform    EPlatform
+  type        ETool[]
+  /// 是否开源
+  opensource  Boolean?
+  description String?
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId      String
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  @@map("tool")
+}
+
+/// 标签
+model Tag {
+  id        String    @id @default(cuid())
+  name      String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("tag")
+}
+
+/// 阅读数
+model View {
+  id        String    @id @default(cuid())
+  name      String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("view")
+}
+
+/// 标签
+model Website {
+  id          String    @id @default(cuid())
+  title       String?
+  description String?
+  icon        String?
+  url         String
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  @@map("website")
+}
