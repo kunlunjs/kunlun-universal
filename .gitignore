@@ -109,6 +109,8 @@ pnpm-lock.yaml
 pnpm-lock.yml
 yarn.lock
 build
+dist
+dist-remix
+dist-server
 public/build
 postgres-data
-server-dist

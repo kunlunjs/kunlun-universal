@@ -15,4 +15,9 @@
 **/*.graphql
 tailwind.css
 server
-server-dist
+build
+dist
+dist-remix
+dist-server
+public/build
+postgres-data

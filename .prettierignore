@@ -13,4 +13,9 @@
 *.yaml
 LICENSE
 
+build
 dist
+dist-remix
+dist-server
+public/build
+postgres-data

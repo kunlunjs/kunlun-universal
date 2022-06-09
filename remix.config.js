@@ -5,7 +5,7 @@ module.exports = {
   ignoredRouteFiles: ['**/.*'],
   // appDirectory: "app",
   // assetsBuildDirectory: "public/build",
-  // serverBuildPath: "build/index.js",
+  serverBuildPath: 'dist-remix/index.js', // default: build/index
   // publicPath: "/build/",
   // https://remix.run/docs/en/v1/pages/gotchas#server-code-in-client-bundles
   serverDependenciesToBundle: [

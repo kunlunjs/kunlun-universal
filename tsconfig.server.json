@@ -11,6 +11,6 @@
       "@/*": ["./server/*"]
     },
     "noEmit": false,
-    "outDir": "server-dist"
+    "outDir": "dist-server"
   }
 }

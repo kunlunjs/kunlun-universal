@@ -13,4 +13,9 @@
 LICENSE
 
 generate
+build
 dist
+dist-remix
+dist-server
+public/build
+postgres-data
