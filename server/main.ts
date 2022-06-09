@@ -19,7 +19,7 @@ async function bootstrap() {
   await app.listen(configService.get('SERVER_PORT') || 3001)
   console.log(
     chalk.green(
-      `⚡️ Server is running on1: ${chalk.underline(await app.getUrl())}`
+      `⚡️ Server is running on: ${chalk.underline(await app.getUrl())}`
     )
   )
 }
