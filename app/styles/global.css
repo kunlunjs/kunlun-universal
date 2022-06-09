@@ -1,0 +1,142 @@
+/* stylelint-disable property-no-unknown */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  @apply scroll-smooth;
+}
+
+pre[class*='language-'] {
+  @apply p-8 m-0 rounded-xl bg-gray-900 !important;
+}
+
+.token:is(.property, .tag, .constant, .symbol, .deleted) {
+  @apply text-red-400 !important;
+}
+
+.token:is(.selector, .attr-name, .string, .char, .builtin, .inserted) {
+  @apply text-yellow-400 !important;
+}
+
+.token:is(.atrule, .attr-value, .function, .class-name) {
+  @apply text-green-400 !important;
+}
+
+.token:is(.comment, .prolog, .doctype, .cdata) {
+  @apply text-gray-400 !important;
+}
+
+.token:is(.operator, .entity, .url, .variable) {
+  @apply text-white !important;
+}
+
+.token:is(.boolean, .number) {
+  @apply text-purple-400 !important;
+}
+
+.token.keyword {
+  @apply text-cyan-400 !important;
+}
+
+input[type='range'] {
+  width: 100%;
+  height: 28px;
+  margin: 10px 0;
+  appearance: none;
+}
+
+input[type='range']:focus {
+  outline: none;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 6px;
+  background: #000;
+  border: 0 solid #000;
+  border-radius: 50px;
+  box-shadow: 0 0 0 #000;
+  cursor: pointer;
+  animate: 0.2s;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  width: 20px;
+  height: 20px;
+  margin-top: -8px;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 50px;
+  box-shadow: 0 0 0 #000;
+  cursor: pointer;
+  appearance: none;
+}
+
+input[type='range']:focus::-webkit-slider-runnable-track {
+  background: #000;
+}
+
+input[type='range']::-moz-range-track {
+  width: 100%;
+  height: 6px;
+  background: #000;
+  border: 0 solid #000;
+  border-radius: 50px;
+  box-shadow: 0 0 0 #000;
+  cursor: pointer;
+  animate: 0.2s;
+}
+
+input[type='range']::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 50px;
+  box-shadow: 0 0 0 #000;
+  cursor: pointer;
+}
+
+input[type='range']::-ms-track {
+  width: 100%;
+  height: 6px;
+  color: transparent;
+  background: transparent;
+  border-color: transparent;
+  cursor: pointer;
+  animate: 0.2s;
+}
+
+input[type='range']::-ms-fill-lower {
+  background: #000;
+  border: 0 solid #000;
+  border-radius: 100px;
+  box-shadow: 0 0 0 #000;
+}
+
+input[type='range']::-ms-fill-upper {
+  background: #000;
+  border: 0 solid #000;
+  border-radius: 100px;
+  box-shadow: 0 0 0 #000;
+}
+
+input[type='range']::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 50px;
+  box-shadow: 0 0 0 #000;
+  cursor: pointer;
+}
+
+input[type='range']:focus::-ms-fill-lower {
+  background: #000;
+}
+
+input[type='range']:focus::-ms-fill-upper {
+  background: #000;
+}
