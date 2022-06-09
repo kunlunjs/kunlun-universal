@@ -16,5 +16,9 @@ export const links: Links = [
   {
     title: '软件工具',
     href: '/tools'
+  },
+  {
+    title: '网站导航',
+    href: '/websites'
   }
 ]
