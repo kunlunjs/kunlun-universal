@@ -12,12 +12,12 @@ import {
 import NProgress from 'nprogress'
 import nProgressStyles from 'nprogress/nprogress.css'
 import { useEffect } from 'react'
+import tailwindcss from '../public/styles/tailwind.css'
 import { Banner } from './components/global/Banner'
 import { Popup } from './components/global/Popup'
 import { MainLayout } from './components/layout/MainLayout'
 // import { Nav } from './components/nav/Nav'
 // npm run generate:css 生成的 tailwindcss 文件
-// import tailwindcss from '../public/styles/tailwind.css'
 import noScriptStyles from './styles/no-script.css'
 
 export const meta: MetaFunction = () => {
@@ -34,13 +34,13 @@ export const links: LinksFunction = () => {
     {
       rel: 'stylesheet',
       href: nProgressStyles
-    }
+    },
     // 使用 <link rel="stylesheet" href="/styles/tailwind.css" /> 代替
     // 引入的样式文件名会带哈希
-    // {
-    //   rel: 'stylesheet',
-    //   href: tailwindcss
-    // }
+    {
+      rel: 'stylesheet',
+      href: tailwindcss
+    }
   ]
 }
 
