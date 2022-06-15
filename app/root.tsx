@@ -19,7 +19,7 @@ import { MainLayout } from './components/layout/MainLayout'
 // npm run generate:css 生成的 tailwindcss 文件
 // import tailwindcss from '../public/styles/tailwind.css'
 import noScriptStyles from './styles/no-script.css'
-
+import 'antd/dist/antd.css'
 export const meta: MetaFunction = () => {
   // TODO: 补充更多 meta
   return {
