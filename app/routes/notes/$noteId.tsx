@@ -1,4 +1,8 @@
-import type { LoaderFunction } from '@remix-run/node'
+import type {
+  LinksFunction,
+  LoaderFunction,
+  MetaFunction
+} from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import type { StatSyncFn } from 'fs-extra'
@@ -11,9 +15,12 @@ import type { NoteItems } from './index'
 export type NoteItem = {
   content: string
   meta: ExcludeFunctionProperties<ReturnType<StatSyncFn>>
-} & NoteItems['notes'][number]['matter']
+} & {
+  matter: NoteItems['notes'][number]
+}
 
 type LoaderData = {
+  matter: NoteItems['notes'][number]['matter']
   html: string
 }
 
@@ -23,6 +30,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   const html = await convert(data.content)
   // console.log(html)
   return json<LoaderData>({
+    matter: data.matter,
     html: html
       .replace(
         /<pre>/g,
@@ -32,18 +40,73 @@ export const loader: LoaderFunction = async ({ params }) => {
   })
 }
 
+export const meta: MetaFunction = () => {
+  return {}
+}
+
+export const links: LinksFunction = () => {
+  return []
+}
+
 export default function NoteByIdRoute() {
-  const { html } = useLoaderData() as LoaderData
+  const { matter, html } = useLoaderData() as LoaderData
+
+  const schema: NoteItems['notes'][number]['matter'] = {
+    '@context': 'http://schema.org',
+    '@type': 'BlogPosting',
+    'mainEntityOfPage': {
+      '@type': 'WebPage',
+      '@id': ``
+    },
+    'headline': `${matter.title}`,
+    'datePublished': new Date().toISOString(),
+    'dateModified': new Date().toISOString(),
+    'author': {
+      '@type': 'Person',
+      'name': matter.author as string,
+      'url': 'https://twitter.com/itsmarkmead'
+    },
+    'publisher': {
+      '@type': 'Organization',
+      'name': matter.author as string
+    },
+    'articleBody': html,
+    'image': {
+      '@type': 'ImageObject',
+      'url': 'https://www.hyperui.dev/og.png',
+      'height': 630,
+      'width': 1200
+    }
+  }
   return (
-    <div className="flex justify-center p-6">
-      <ClientOnly fallback={<p>Loading...</p>}>
-        {() => (
-          <article
-            className="prose prose-headings:font-bold prose-lead:leading-relaxed prose-p:leading-loose prose-p:text-black prose-a:font-medium prose-a:text-pink-600 prose-a:decoration-wavy hover:prose-a:text-indigo-600 prose-blockquote:rounded-lg prose-blockquote:border prose-blockquote:border-black prose-blockquote:p-8 prose-blockquote:text-xl prose-blockquote:leading-10 prose-pre:bg-black prose-pre:text-base prose-pre:leading-loose prose-pre:text-white prose-li:font-medium prose-li:text-black marker:prose-li:text-black prose-table:border-separate prose-table:overflow-hidden prose-table:rounded-lg prose-table:border prose-table:border-black prose-thead:bg-black prose-tr:border-y-0 even:prose-tr:bg-gray-100 prose-th:py-2 prose-th:px-4 prose-th:text-white prose-td:py-2 prose-td:px-4 prose-img:rounded-lg prose-img:border prose-img:border-black prose-img:bg-pink-100 prose-img:p-4"
-            dangerouslySetInnerHTML={{ __html: html }}
-          ></article>
-        )}
-      </ClientOnly>
-    </div>
+    <ClientOnly fallback={<p>Loading...</p>}>
+      {() => (
+        <>
+          <header>
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+            ></script>
+            <title>{matter.title}</title>
+            <meta
+              content={matter.introduction}
+              key="description"
+              name="description"
+            />
+          </header>
+          <div className="mx-auto max-w-screen-xl px-4 py-8">
+            <article className="prose mx-auto prose-img:w-full prose-img:rounded-lg">
+              <header>
+                <time className="text-sm text-gray-500">
+                  {matter.publishAt}
+                </time>
+                <h1 className="mt-1">{matter.title}</h1>
+              </header>
+              <main dangerouslySetInnerHTML={{ __html: html }}></main>
+            </article>
+          </div>
+        </>
+      )}
+    </ClientOnly>
   )
 }

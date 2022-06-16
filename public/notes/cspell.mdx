@@ -1,0 +1,79 @@
+---
+title: A Spell Checker for Code!
+introduction: CSpell is a command line tool and library for spell checking code.
+author: Yudong Zhu
+recommend: true
+star: 2
+publishAt: 2022/06/16
+views: 167
+categories: 在线文档
+tags: CSpell
+---
+
+### 安装
+
+```bash
+pnpm i cspell
+```
+
+### 使用
+
+> package.json
+
+```json
+{
+  "scripts": {
+    "lint:spelling": "cspell \"**\" --no-progress"
+  }
+}
+```
+
+### 配置文件
+
+> .cspell.json
+
+```json
+{
+  "version": "0.2",
+  // .gitignore 位置
+  "gitignoreRoot": ".",
+  // 使用 .gitignore 忽略部分文件
+  "useGitignore": true,
+  // 字典库
+  "dictionaries": [
+    "css",
+    "html",
+    "fonts",
+    "typescript",
+    "softwareTerms",
+    "companies",
+    "lorem-ipsum",
+    "project-words"
+  ],
+  // 额外定义的合法的单词，每个单词占一行
+  "dictionaryDefinitions": [
+    {
+      "name": "project-words",
+      "path": "./project-words.txt",
+      "noSuggest": true
+    }
+  ],
+  // 忽略的文件或路径
+  "ignorePaths": [
+    "CHANGELOG.md",
+    "packages/docusaurus-theme-translations/locales",
+    "package.json",
+    "yarn.lock",
+    "project-words.txt",
+    "__snapshots__",
+    "website/src/data/users.tsx",
+    "website/src/data/tweets.tsx",
+    "*.xyz",
+    "*.docx",
+    "versioned_docs",
+    "*.min.*"
+  ],
+  // 忽略的正则匹配规则
+  "ignoreRegExpList": ["Email", "Urls", "#[\\w-]*"]
+}
+```

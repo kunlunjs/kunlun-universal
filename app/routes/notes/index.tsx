@@ -9,27 +9,62 @@ export type NoteItems = {
     matter: {
       [K: string]: any
       /** 标题 */
-      title: string
+      'title'?: string
       /** 封面 */
-      cover?: string
+      'cover'?: string
       /** 简介 */
-      introduction?: string
-      /** 作者 */
-      author?: string
+      'introduction'?: string
       /** 是否推荐 */
-      recommend?: boolean
+      'recommend'?: boolean
       /** 星级 */
-      star?: number
+      'star'?: number
       /** 标签 */
-      tags?: string[]
+      'tags'?: string[]
       /** 分类 */
-      categories?: string[]
+      'categories'?: string[]
       /** 阅读数 */
-      views?: number
+      'views'?: number
       /** 是否草稿 */
-      draft?: boolean
+      'draft'?: boolean
       /** 发布时间 */
-      publishAt: string
+      'publishAt'?: string
+      /** @context */
+      '@context'?: 'http://schema.org'
+      /** @type */
+      '@type'?: string
+      /** mainEntityOfPage */
+      'mainEntityOfPage'?: {
+        '@type': string
+        '@id': string
+      }
+      /** 标题 */
+      'headline'?: string
+      /** 发布时间 */
+      'datePublished'?: string
+      /** 修改时间 */
+      'dateModified'?: string
+      /** 作者 */
+      'author'?:
+        | string
+        | {
+            '@type': 'Person' | 'Organization'
+            'name': string
+            'url': string
+          }
+      /** 发布者 */
+      'publisher'?: {
+        '@type': 'Person' | 'Organization'
+        'name': string
+      }
+      /** 文章内容 */
+      'articleBody'?: string
+      /** 图片 */
+      'image'?: {
+        '@type': 'ImageObject'
+        'url': string
+        'height': number
+        'width': number
+      }
     }
   }[]
 }
@@ -55,7 +90,7 @@ export default function NotesRoute() {
         <div className="mx-auto max-w-screen-2xl px-4 py-16 sm:px-6 lg:px-8">
           <div className="items-end justify-between sm:flex">
             <div className="max-w-xl">
-              <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">
+              <h2 className="text-4xl font-bold tracking-tight sm:text-3xl">
                 技术文档
               </h2>
               <p className="mt-8 max-w-lg text-gray-500">
@@ -63,7 +98,7 @@ export default function NotesRoute() {
               </p>
             </div>
           </div>
-          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {notes.map(({ name, matter }, ix) => {
               return (
                 <Link key={matter.title} to={`/notes/${name?.split('.')[0]}`}>
@@ -85,21 +120,21 @@ export default function NotesRoute() {
                             )
                           })}
                         </span>
-                        <span className="text-sm text-gray-400">
+                        <span className="text-xs text-gray-400">
                           {matter.views} views
                         </span>
                       </div>
                       <div className="mt-4">
-                        <h5 className="text-base font-bold text-pink-600 sm:text-2xl">
+                        <h6 className="text-base font-bold text-pink-600 sm:text-lg">
                           {matter.title}
-                        </h5>
-                        <p className="mt-4 text-gray-600">
+                        </h6>
+                        <p className="mt-2 text-sm text-gray-600">
                           {matter.introduction}
                         </p>
                       </div>
                     </div>
-                    <footer className="mt-8 flex justify-between text-sm text-gray-500">
-                      <span>{matter.author}</span>
+                    <footer className="mt-8 flex justify-between text-xs text-gray-500">
+                      <span>{matter.author as string}</span>
                       <span>{matter.publishAt}</span>
                     </footer>
                   </blockquote>
