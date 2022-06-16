@@ -17,66 +17,66 @@ model User {
   components Component[]
   snippets   Snippet[]
   tools      Tool[]
-  createdAt  DateTime    @default(now()) @map("created_at")
-  updatedAt  DateTime    @updatedAt @map("updated_at")
-  deletedAt  DateTime?   @map("deleted_at")
+  created_at DateTime    @default(now())
+  updated_at DateTime    @updatedAt
+  deleted_at DateTime?
 
   @@map("user")
 }
 
 /// 密码
 model Password {
-  hash   String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId String @unique
+  hash    String
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user_id String @unique
 
   @@map("password")
 }
 
 /// 分类
 model Category {
-  id        String    @id @default(cuid())
-  name      String
-  notes     Note[]
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  deletedAt DateTime? @map("deleted_at")
+  id         String    @id @default(cuid())
+  name       String
+  notes      Note[]
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
 
   @@map("category")
 }
 
 /// 文章
 model Note {
-  id        String     @id @default(cuid())
-  title     String
-  subTitle  String?    @map("sub_title")
-  banner    String?
+  id         String     @id @default(cuid())
+  title      String
+  sub_title  String?
+  banner     String?
   // 封面
-  cover     String?
-  body      String?
-  category  Category[]
-  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId    String
-  createdAt DateTime   @default(now()) @map("created_at")
-  updatedAt DateTime   @updatedAt @map("updated_at")
-  deletedAt DateTime?  @map("deleted_at")
+  cover      String?
+  body       String?
+  category   Category[]
+  user       User       @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user_id    String
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
+  deleted_at DateTime?
 
   @@map("note")
 }
 
 /// 组件
 model Component {
-  id        String    @id @default(cuid())
-  title     String
-  subTitle  String?   @map("sub_title")
-  banner    String?
-  cover     String?
-  body      String?
-  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId    String
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  deletedAt DateTime? @map("deleted_at")
+  id           String    @id @default(cuid())
+  title        String
+  sub_title    String?
+  banner       String?
+  cover        String?
+  body         String?
+  publisher    User      @relation(fields: [publisher_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  publisher_id String
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt()
+  deleted_at   DateTime?
 
   @@map("component")
 }
@@ -86,29 +86,35 @@ enum ECodeLanguage {
   CSS
   HTML
   Go
+  Dart
   Java
+  Swift
   Shell
+  Kotlin
   Python
+  CSharp
   JavaScript
   TypeScript
 }
 
 /// 代码片段
 model Snippet {
-  id        String        @id @default(cuid())
-  language  ECodeLanguage
-  body      Json?
-  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId    String
-  createdAt DateTime      @default(now()) @map("created_at")
-  updatedAt DateTime      @updatedAt @map("updated_at")
-  deletedAt DateTime?     @map("deleted_at")
+  id           String        @id @default(cuid())
+  language     ECodeLanguage
+  body         Json?
+  /// 发布者
+  publisher    User          @relation(fields: [publisher_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  /// 发布者
+  publisher_id String
+  created_at   DateTime      @default(now())
+  updated_at   DateTime      @updatedAt
+  deleted_at   DateTime?
 
   @@map("snippet")
 }
 
 /// 工具类型
-enum ETool {
+enum EToolType {
   /// IDE
   IDE
   /// 媒体工具
@@ -123,30 +129,39 @@ enum ETool {
   Application
   /// 编程开发
   Programming
+  /// 其它
+  Other
 }
 
 enum EPlatform {
   Mac
+  iOS
   Linux
   Windows
+  Android
 }
 
 /// 工具
 model Tool {
-  id          String    @id @default(cuid())
-  name        String
-  icon        String?
-  url         String
-  platform    EPlatform
-  type        ETool[]
+  id           String      @id @default(cuid())
+  name         String
+  icon         String?
+  url          String
+  /// 版本
+  version      String?
+  /// 兼容的平台
+  platform     EPlatform
+  type         EToolType[]
   /// 是否开源
-  opensource  Boolean?
-  description String?
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId      String
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
-  deletedAt   DateTime? @map("deleted_at")
+  opensource   Boolean?
+  description  String?
+  /// 发布者
+  publisher    User        @relation(fields: [publisher_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  /// 发布者
+  publisher_id String
+  created_at   DateTime    @default(now())
+  updated_at   DateTime    @updatedAt
+  deleted_at   DateTime?
 
   @@map("tool")
 }
@@ -155,19 +170,20 @@ model Tool {
 model Tag {
   id          String    @id @default(cuid())
   name        String
+  icon        String?
   description String
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
-  deletedAt   DateTime? @map("deleted_at")
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  deleted_at  DateTime?
 
   @@map("tag")
 }
 
 /// 阅读数
 model View {
-  id        String   @id @default(cuid())
-  name      String
-  createdAt DateTime @default(now()) @map("created_at")
+  id         String   @id @default(cuid())
+  name       String
+  created_at DateTime @default(now())
 
   @@map("view")
 }
@@ -179,10 +195,13 @@ model Website {
   description String?
   icon        String?
   url         String
+  /// 加精
+  recommend   Boolean   @default(false)
+  // 相似的网站
   // alternatives Website[] @relation("Website")
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
-  deletedAt   DateTime? @map("deleted_at")
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  deleted_at  DateTime?
 
   @@map("website")
 }
