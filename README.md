@@ -10,7 +10,7 @@ pnpm i
 ## Developing
 
 ```
-pnpm dev:all
+pnpm dev
 ```
 
 open [http://localhost:3000](http://localhost:3000)
