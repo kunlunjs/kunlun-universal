@@ -25,7 +25,6 @@ export const loader: LoaderFunction = async ({ request, params, context }) => {
 
 export default function Home() {
   const data = useLoaderData() as LoaderData
-  console.log(data)
 
   return (
     <>

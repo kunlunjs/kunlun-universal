@@ -14,7 +14,7 @@ export const MainLayout: FC<MainLayoutProps> = ({ children }) => {
     <>
       <Header />
       {/* 全屏表示如下： container h-screen w-screen */}
-      {/* 4.25rem - Footer 44px - Banner 66px - Header */}
+      {/* 4.25rem - Footer, 44px - Banner, 66px - Header */}
       <main className="min-h-[calc(100vh_-_4.25rem_-_44px_-_66px)]">
         {children}
       </main>
