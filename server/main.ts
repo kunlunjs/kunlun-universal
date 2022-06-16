@@ -3,12 +3,16 @@ import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import type { NestExpressApplication } from '@nestjs/platform-express'
 import chalk from 'chalk'
+// import { Logger } from 'nestjs-pino'
 import { AppModule } from './app.module'
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     cors: true
+    // logger: false,
+    // bufferLogs: true
   })
+  // app.useLogger(app.get(Logger))
   app.setGlobalPrefix('api', {
     exclude: []
   })
