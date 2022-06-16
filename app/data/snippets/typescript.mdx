@@ -1,0 +1,24 @@
+---
+title: TypeScript 教程
+---
+
+如何声明组件类型？
+
+```ts
+delcare module 'module-name' {
+  import type { ReactNode } from 'react'
+
+  export type FallbackParams = {
+    readonly error: Error
+    readonly tryAgain: () => void
+  }
+
+  export type FallbackFunction = (params: FallbackParams) => JSX.Element
+
+  export interface Props {
+    readonly fallback?: FallbackFunction
+    readonly children: ReactNode
+  }
+  export default function ErrorBoundary(props: Props): JSX.Element
+}
+```
