@@ -1,0 +1,8 @@
+.DS_Store
+*.log
+.env
+/.cache
+/public/build
+/dist-remix
+/dist-server
+/node_modules
