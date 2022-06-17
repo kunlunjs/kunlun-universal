@@ -53,6 +53,3 @@ const supportedPrefetchStrategy = supports('prefetch')
 function prefetch(url: string): Promise<void> {
   return supportedPrefetchStrategy(url).catch(() => {}) // 404s are logged to the console anyway.
 }
-
-// for tsconfig.json --isolatedModules=true
-export {}

@@ -42,6 +42,3 @@ function hasProtocol(url: string): boolean {
 function isInternalUrl(url: string): boolean {
   return typeof url !== 'undefined' && !hasProtocol(url)
 }
-
-// for tsconfig.json --isolatedModules=true
-export {}

@@ -14,7 +14,7 @@ export const Header: FC = () => {
 
   return (
     <header className="sticky inset-x-0 top-0 z-50 border-b border-gray-200 bg-white">
-      <div className="mx-auto flex h-16 max-w-screen-xl items-center justify-between px-4">
+      <div className="mx-auto flex h-16 max-w-screen-2xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <nav className="flex items-center">
           <Link to="/">
             <span className="text-sm font-medium">
