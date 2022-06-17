@@ -19,23 +19,28 @@ export class AppController {
   findManyNotes() {
     const dir = resolve(process.cwd(), 'public/notes')
     const notes = readdirSync(dir)
-    const result = notes.map(note => {
-      const data = matter(readFileSync(dir + `/${note}`)).data
-      const matters = { ...data }
-      if (data?.tags) {
-        matters.tags = data.tags.split(' ')
-      }
-      if (data?.categories) {
-        matters.categories = data.categories.split(' ')
-      }
-      return {
-        name: note,
-        matter: {
-          title: note,
-          ...matters
+    const result = notes
+      .map(note => {
+        if (statSync(`${dir}/${note}`).isFile()) {
+          const data = matter(readFileSync(dir + `/${note}`)).data
+          const matters = { ...data }
+          if (data?.tags) {
+            matters.tags = data.tags.split(' ')
+          }
+          if (data?.categories) {
+            matters.categories = data.categories.split(' ')
+          }
+          return {
+            name: note,
+            matter: {
+              title: note,
+              ...matters
+            }
+          }
         }
-      }
-    })
+        return null
+      })
+      .filter(Boolean)
     return result
   }
 

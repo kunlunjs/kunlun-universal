@@ -1,11 +1,11 @@
 import type { FC } from 'react'
 import { ClientOnly } from 'remix-utils'
-import type { Component } from '~/interface/component'
-import { Example } from '../component/Example/Example'
+import type { KLComponent } from '~/interface/component'
+import { Example } from '../example/Example'
 
 type ListProps = {
   name: string
-  items: Array<Component>
+  items: Array<KLComponent>
   spacing: string
 }
 

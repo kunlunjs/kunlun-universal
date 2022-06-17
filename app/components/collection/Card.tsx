@@ -1,10 +1,10 @@
 import { Link } from '@remix-run/react'
 import type { FC } from 'react'
-import type { ComponentCard } from '~/interface/component'
-import { Tags } from '../component/Example/Tags'
+import type { KLComponentCard } from '~/interface/component'
+import { Tags } from '../example/Tags'
 
 type CardProps = {
-  item: ComponentCard
+  item: KLComponentCard
 }
 
 export const Card: FC<CardProps> = ({ item }) => {

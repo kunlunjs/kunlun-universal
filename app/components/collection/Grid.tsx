@@ -1,9 +1,9 @@
 import type { FC } from 'react'
-import type { ComponentCard } from '~/interface/component'
+import type { KLComponentCard } from '~/interface/component'
 import { Card } from './Card'
 
 type GridProps = {
-  items: Array<ComponentCard>
+  items: Array<KLComponentCard>
 }
 
 export const Grid: FC<GridProps> = ({ items }) => {

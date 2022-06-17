@@ -22,7 +22,7 @@ import {
   ToolbarPlugin,
   TreeViewPlugin
 } from '~/components/lexical'
-import editorStyles from './editor.css'
+import editorStyles from '../../styles/editor.css'
 
 function Placeholder() {
   return <div className="editor-placeholder">Enter some rich text...</div>
