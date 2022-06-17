@@ -3,18 +3,16 @@ import type { FC } from 'react'
 import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import { IconLoading } from '~/components/icon/Loading'
-import type { Component } from '~/interface/component'
+import type { KLComponent } from '~/interface/component'
 import { allBreakpoints } from '~/lib/breakpoints'
 import { source } from '~/lib/component'
-import { Breakpoint } from './buttons/Breakpoint'
-import { Copy } from './buttons/Copy'
-import { View } from './buttons/View'
+import { Breakpoint, Copy, View } from './buttons'
 import { Range } from './Range'
 import { Tags } from './Tags'
 
 type ExampleProps = {
+  item: KLComponent
   name: string
-  item: Component
   spacing: string
 }
 
@@ -52,8 +50,6 @@ export const Example: FC<ExampleProps> = ({ name, item, spacing }) => {
     if (inView) {
       fetchHtml()
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView])
 
   useEffect(() => {

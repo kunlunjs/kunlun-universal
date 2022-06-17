@@ -13,13 +13,15 @@ import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 import { HeadingNode, QuoteNode } from '@lexical/rich-text'
 import { TableCellNode, TableNode, TableRowNode } from '@lexical/table'
 import type { LinksFunction } from '@remix-run/node'
-import type { ComponentProps } from 'react'
-import { PlaygroundAutoLinkPlugin } from '~/components/lexical-plugins/AutoLinkPlugin'
-import { CodeHighlightPlugin } from '~/components/lexical-plugins/CodeHighlightPlugin'
-import { LexicalTheme } from '~/components/lexical-plugins/LexicalTheme'
-import { ListMaxIndentLevelPlugin } from '~/components/lexical-plugins/ListMaxIndentLevelPlugin'
-import { ToolbarPlugin } from '~/components/lexical-plugins/ToolbarPlugin'
-import { TreeViewPlugin } from '~/components/lexical-plugins/TreeViewPlugin'
+import type { InitialConfig } from '~/components/lexical'
+import {
+  CodeHighlightPlugin,
+  LexicalTheme,
+  ListMaxIndentLevelPlugin,
+  PlaygroundAutoLinkPlugin,
+  ToolbarPlugin,
+  TreeViewPlugin
+} from '~/components/lexical'
 import editorStyles from './editor.css'
 
 function Placeholder() {
@@ -35,7 +37,7 @@ export const links: LinksFunction = () => {
   ]
 }
 
-const editorConfig: ComponentProps<typeof LexicalComposer>['initialConfig'] = {
+const editorConfig: InitialConfig = {
   namespace: 'Universal',
   theme: LexicalTheme,
   // Handling of errors during update
@@ -68,14 +70,14 @@ export default function Editor() {
             contentEditable={<ContentEditable className="editor-input" />}
             placeholder={<Placeholder />}
           />
+          <LinkPlugin />
+          <ListPlugin />
           <HistoryPlugin />
           <TreeViewPlugin />
           <AutoFocusPlugin />
           <CodeHighlightPlugin />
-          <ListPlugin />
-          <LinkPlugin />
           <PlaygroundAutoLinkPlugin />
-          <ListMaxIndentLevelPlugin maxDepth={7} />
+          <ListMaxIndentLevelPlugin />
           <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
         </div>
       </div>

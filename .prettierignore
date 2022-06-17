@@ -18,4 +18,5 @@ dist
 dist-remix
 dist-server
 public/build
+public/scripts
 postgres-data

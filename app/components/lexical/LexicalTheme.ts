@@ -1,4 +1,6 @@
-export const LexicalTheme = {
+import type { InitialConfig } from './interface'
+
+export const LexicalTheme: InitialConfig['theme'] = {
   ltr: 'ltr',
   rtl: 'rtl',
   placeholder: 'editor-placeholder',
@@ -24,8 +26,8 @@ export const LexicalTheme = {
   text: {
     bold: 'editor-text-bold',
     italic: 'editor-text-italic',
-    overflowed: 'editor-text-overflowed',
-    hashtag: 'editor-text-hashtag',
+    // overflowed: 'editor-text-overflowed',
+    // hashtag: 'editor-text-hashtag',
     underline: 'editor-text-underline',
     strikethrough: 'editor-text-strikethrough',
     underlineStrikethrough: 'editor-text-underlineStrikethrough',

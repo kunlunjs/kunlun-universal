@@ -1,24 +1,28 @@
-export interface Component {
+export interface KLComponent {
   id?: string
   title: string
   spacing?: string
   tags?: string[]
 }
 
-export type Components = Array<Component>
+export type KLComponents = Array<KLComponent>
 
-export interface ComponentPage {
+export interface KLComponentPage {
   title: string
   slug: string
   icon?: string
   spacing?: string
-  components?: Components
+  components?: KLComponents
 }
 
-export interface ComponentCard {
+export type KLComponentType = 'application' | 'ecommerce'
+
+export interface KLComponentCard {
+  // [k: string]: any
   title: string
   slug: string
   icon: string
   count: number
   tags?: string[]
+  categories: string[]
 }
