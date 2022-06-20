@@ -81,7 +81,7 @@ export const loader: LoaderFunction = async () => {
   })
 }
 
-export default function NotesRoute() {
+export default function NotesRouter() {
   const { notes } = useLoaderData() as NoteItems
 
   return (

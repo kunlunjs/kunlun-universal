@@ -1,3 +1,3 @@
-export default function ToolsRoute() {
-  return <div>tools</div>
+export default function ToolsRouter() {
+  return <div className="mx-auto max-w-screen-lg text-center">软件工具</div>
 }

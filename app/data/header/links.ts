@@ -2,8 +2,12 @@ import type { Links } from '~/interface/global'
 
 export const links: Links = [
   {
-    title: '业务组件',
+    title: '组件中心',
     href: '/'
+  },
+  {
+    title: '科技资讯',
+    href: '/news'
   },
   {
     title: '技术文档',

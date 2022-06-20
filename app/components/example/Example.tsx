@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import prism from 'prismjs'
 import type { FC } from 'react'
 import { useEffect, useState } from 'react'
@@ -6,7 +7,7 @@ import { IconLoading } from '~/components/icon/Loading'
 import type { KLComponent } from '~/interface/component'
 import { allBreakpoints } from '~/lib/breakpoints'
 import { source } from '~/lib/component'
-import { Breakpoint, Copy, View } from './buttons'
+import { Breakpoint, Copy, Direction } from './buttons'
 import { Range } from './Range'
 import { Tags } from './Tags'
 
@@ -19,7 +20,9 @@ type ExampleProps = {
 export const Example: FC<ExampleProps> = ({ name, item, spacing }) => {
   const [code, setCode] = useState<string>()
   const [html, setHtml] = useState<string>()
-  const [view, setView] = useState<boolean>(true)
+  const [direction, setDirection] = useState<'horizontal' | 'verticle'>(
+    'horizontal'
+  )
   const [width, setWidth] = useState<string>('100%')
   const [range, setRange] = useState<number>(1348)
 
@@ -68,6 +71,8 @@ export const Example: FC<ExampleProps> = ({ name, item, spacing }) => {
       : setRange(Number(width.replace('px', '')))
   }
 
+  const bw = direction === 'horizontal' ? 'w-1/2' : 'w-full'
+
   return (
     <div className="-mt-20 pt-20" ref={ref} id={slug}>
       <Tags tags={tags} />
@@ -106,7 +111,7 @@ export const Example: FC<ExampleProps> = ({ name, item, spacing }) => {
             </strong>
             {code && (
               <div className="flex items-center gap-4">
-                <View onClick={setView} view={view} />
+                <Direction direction={direction} onClick={setDirection} />
                 <Copy code={code} />
               </div>
             )}
@@ -123,20 +128,27 @@ export const Example: FC<ExampleProps> = ({ name, item, spacing }) => {
             </div>
           )}
 
-          <div className={view ? 'block' : 'hidden'}>
-            <iframe
-              className="h-[400px] w-full rounded-lg bg-white ring-2 ring-black lg:h-[600px] lg:transition-all"
-              loading="lazy"
-              srcDoc={html}
-              style={{ maxWidth: width }}
-              title={`${title} Component`}
-            ></iframe>
-          </div>
+          <div
+            className={clsx(
+              'flex',
+              direction === 'horizontal' ? 'flex-row' : 'flex-col'
+            )}
+          >
+            <div className={bw}>
+              <iframe
+                className="h-[200px] w-full border-r-0 bg-white ring-2 ring-black lg:h-[400px] lg:transition-all"
+                loading="lazy"
+                srcDoc={html}
+                style={{ maxWidth: width }}
+                title={`${title} Component`}
+              ></iframe>
+            </div>
 
-          <div className={view ? 'hidden' : 'block'}>
-            <pre className="h-[400px] overflow-auto rounded-lg p-4 ring-2 ring-black lg:h-[600px]">
-              <code className="language-html">{code}</code>
-            </pre>
+            <div className={bw}>
+              <pre className="h-[200px] overflow-auto p-4 ring-2 ring-black lg:h-[400px]">
+                <code className="language-html">{code}</code>
+              </pre>
+            </div>
           </div>
         </div>
       </div>

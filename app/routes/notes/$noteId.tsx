@@ -29,9 +29,6 @@ type LoaderData = {
   matter: NoteItems['notes'][number]['matter']
 }
 
-const EXTRA_FILE_RULE =
-  /^<p>\{\{([\w-/]+\.(js|jsx|ts|tsx|json|html|css|less|scss|sass))(:\w+-\w+|:\w+|:-\w+)?\}\}<\/p>$/
-
 export const loader: LoaderFunction = async ({ params }) => {
   const response = await request.get(`/api/notes/${params.noteId}`)
   const data = response.data as NoteItem
@@ -91,7 +88,7 @@ export default function NoteByIdRoute() {
     <ClientOnly fallback={<p>Loading...</p>}>
       {() => (
         <>
-          <header>
+          {/* <header>
             <script
               type="application/ld+json"
               dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
@@ -102,7 +99,7 @@ export default function NoteByIdRoute() {
               key="description"
               name="description"
             />
-          </header>
+          </header> */}
           <div className="mx-auto max-w-screen-xl px-4 py-8">
             <article className="prose mx-auto prose-img:w-full prose-img:rounded-lg">
               <header>
@@ -111,7 +108,7 @@ export default function NoteByIdRoute() {
                 </time>
                 <h1 className="mt-1">{matter.title}</h1>
               </header>
-              <main dangerouslySetInnerHTML={{ __html: html }}></main>
+              {/* <main dangerouslySetInnerHTML={{ __html: html }}></main> */}
               <ModulerLoader imports={{ 'react-markdown': getReactMarkdown }}>
                 <ReactMarkdown>{markdown}</ReactMarkdown>
               </ModulerLoader>

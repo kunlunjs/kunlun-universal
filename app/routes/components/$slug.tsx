@@ -8,8 +8,10 @@ import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import fs from 'fs-extra'
 import matter from 'gray-matter'
+import type { MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { MDXRemote } from 'next-mdx-remote'
 import { toast, ToastContainer } from 'react-toastify'
+import toastStyles from 'react-toastify/dist/ReactToastify.css'
 import { List } from '~/components/collection/List'
 import { ToastContext } from '~/context/toast'
 import type { KLComponent, KLComponents } from '~/interface/component'
@@ -18,9 +20,9 @@ import { getDirectory } from '~/lib/common'
 import globalStyles from '~/styles/global.css'
 
 type LoaderData = {
-  source: any
   name: string
   frontMatter: FrontMatter
+  source: MDXRemoteSerializeResult<Record<string, unknown>>
 }
 
 const components = { List }
@@ -37,18 +39,23 @@ export const links: LinksFunction = () => {
     {
       rel: 'stylesheet',
       href: globalStyles
+    },
+    // TODO: 未生效
+    {
+      rel: 'toastStyles',
+      href: toastStyles
     }
   ]
 }
 
 export const loader: LoaderFunction = async ({ request, params, context }) => {
   const { slug } = params
-  const source = fs.readFileSync(
-    path.resolve(getDirectory('components'), `${slug}.mdx`)
-  )
+  const source = fs
+    .readFileSync(path.resolve(getDirectory('components'), `${slug}.mdx`))
+    .toString()
   // content 是原始 md/mdx 内容（不含matter），data 是解析的 matter 对象
   const { content, data } = matter(source)
-  // NOTE: ES Module 只能这么导入
+  // NOTE: ES Module
   const { serialize } = await import('next-mdx-remote/serialize')
   const mdxSource = await serialize(content, {
     mdxOptions: {
@@ -65,9 +72,8 @@ export const loader: LoaderFunction = async ({ request, params, context }) => {
 }
 
 export default function ComponentSlug() {
-  // source - html name - 文件名（不含路径和后缀名） frontMatter - matter 解析出的对象
+  // source - html, name - 文件名（不含路径和后缀名）, frontMatter - matter 解析出的对象
   const { source, name, frontMatter } = useLoaderData() as LoaderData
-  // console.log('LoaderData: ', `\n`, name, `\n`, source, `\n`, frontMatter)
   const { seo, spacing, components: items } = frontMatter
 
   const componentsArray: KLComponents = Object.entries(items).map(
@@ -98,13 +104,13 @@ export default function ComponentSlug() {
           </div>
         </section>
         <ToastContainer
+          limit={1}
+          theme="dark"
           hideProgressBar
           draggable={false}
           closeButton={false}
-          limit={1}
-          theme="dark"
+          position="top-center"
           className="text-center"
-          position="bottom-center"
         />
       </>
     </ToastContext.Provider>
