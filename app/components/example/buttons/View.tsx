@@ -11,7 +11,7 @@ export const View: FC<ViewProps> = ({ onClick, view }) => {
     // TODO
     <button
       onClick={() => onClick(!view)}
-      className="inline-flex items-center rounded-lg border-2 border-black px-3 py-1.5 hover:bg-black hover:text-white"
+      className="inline-flex items-center rounded-lg border border-black px-3 py-1.5 hover:bg-black hover:text-white"
     >
       <span aria-hidden="true" className="mr-1.5 text-sm" role="img">
         👀

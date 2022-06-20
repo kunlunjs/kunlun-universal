@@ -14,11 +14,11 @@ export const Card: FC<CardProps> = ({ item }) => {
     <Link to={`/components/${slug}`}>
       <div className="group relative block">
         <span
-          className="absolute inset-0 rounded-lg border-2 border-dashed border-black"
+          className="absolute inset-0 rounded-lg border border-dashed border-black"
           aria-hidden="true"
         ></span>
 
-        <div className="rounded-lg border-2 border-black bg-white transition group-hover:-translate-x-2 group-hover:-translate-y-2">
+        <div className="rounded-lg border border-black bg-white transition group-hover:-translate-x-2 group-hover:-translate-y-2">
           <div className="p-6">
             <div className="flex items-start justify-between">
               <span className="text-xl" role="img" aria-hidden="true">

@@ -20,7 +20,7 @@ export const Breakpoint: FC<BreakpointProps> = ({
     <button
       onClick={() => onClick(size)}
       // TODO
-      className={`inline-flex items-center rounded-lg border-2 border-black px-3 py-1.5 hover:bg-black hover:text-white ${
+      className={`inline-flex items-center rounded-lg border border-black px-3 py-1.5 hover:bg-black hover:text-white ${
         active ? 'bg-black text-white' : 'text-black'
       }`}
     >

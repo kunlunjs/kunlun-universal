@@ -21,7 +21,7 @@ export const Example: FC<ExampleProps> = ({ name, item, spacing }) => {
   const [code, setCode] = useState<string>()
   const [html, setHtml] = useState<string>()
   const [direction, setDirection] = useState<'horizontal' | 'verticle'>(
-    'horizontal'
+    'verticle'
   )
   const [width, setWidth] = useState<string>('100%')
   const [range, setRange] = useState<number>(1348)
@@ -93,22 +93,24 @@ export const Example: FC<ExampleProps> = ({ name, item, spacing }) => {
           </h2>
 
           <div className="hidden lg:flex lg:items-center lg:space-x-4">
-            <Range range={range} onChange={setRange} />
-
-            {breakpoints.map(({ name, icon, width: breakpoint }) => (
-              <Breakpoint
-                key={name}
-                text={name}
-                icon={icon}
-                size={breakpoint}
-                onClick={(width: string) => handleWidth(width)}
-                active={width === breakpoint}
-              />
-            ))}
-
-            <strong className="inline-block w-20 rounded-lg bg-black py-2.5 text-center text-xs font-medium text-white">
-              @ {width}
-            </strong>
+            {direction === 'verticle' && (
+              <>
+                <Range range={range} onChange={setRange} />
+                {breakpoints.map(({ name, icon, width: breakpoint }) => (
+                  <Breakpoint
+                    key={name}
+                    text={name}
+                    icon={icon}
+                    size={breakpoint}
+                    active={width === breakpoint}
+                    onClick={(width: string) => handleWidth(width)}
+                  />
+                ))}
+                <strong className="inline-block w-20 rounded-lg bg-black py-2.5 text-center text-xs font-medium text-white">
+                  @ {width}
+                </strong>
+              </>
+            )}
             {code && (
               <div className="flex items-center gap-4">
                 <Direction direction={direction} onClick={setDirection} />
@@ -136,7 +138,7 @@ export const Example: FC<ExampleProps> = ({ name, item, spacing }) => {
           >
             <div className={bw}>
               <iframe
-                className="h-[200px] w-full border-r-0 bg-white ring-2 ring-black lg:h-[400px] lg:transition-all"
+                className="h-[200px] w-full border-r-0 bg-white ring-1 ring-black lg:h-[400px] lg:transition-all"
                 loading="lazy"
                 srcDoc={html}
                 style={{ maxWidth: width }}
@@ -145,7 +147,7 @@ export const Example: FC<ExampleProps> = ({ name, item, spacing }) => {
             </div>
 
             <div className={bw}>
-              <pre className="h-[200px] overflow-auto p-4 ring-2 ring-black lg:h-[400px]">
+              <pre className="h-[200px] overflow-auto p-4 ring-1 ring-black lg:h-[400px]">
                 <code className="language-html">{code}</code>
               </pre>
             </div>

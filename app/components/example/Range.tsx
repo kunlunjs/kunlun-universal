@@ -5,7 +5,7 @@ interface RangeProps {
   onChange: CallableFunction
 }
 
-export const Range: FC<RangeProps> = ({ onChange, range }) => {
+export const Range: FC<RangeProps> = ({ range, onChange }) => {
   return (
     <div>
       <input
