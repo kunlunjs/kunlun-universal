@@ -16,6 +16,9 @@ module.exports = {
     // /^unified.*/,
     // /^unist.*/,
     // /^vfile.*/,
+    // 'react-markdown',
     'next-mdx-remote'
+    // 'react-flow-renderer',
+    // /^d3.*/ // for react-flow-renderer
   ]
 }

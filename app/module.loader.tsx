@@ -31,10 +31,21 @@ export function ModulerLoader({
 
   useEffect(() => {
     Promise.all(
-      Object.keys(imports).map(async importName => ({
-        name: 'next-mdx-remote',
-        content: await imports[importName]()
-      }))
+      Object.keys(imports)
+        .map(async importName => {
+          return {
+            name: 'react-markdown',
+            content: await imports[importName]()
+          }
+        })
+        .concat(
+          Object.keys(imports).map(async importName => {
+            return {
+              name: 'react-flow-renderer',
+              content: await imports[importName]()
+            }
+          })
+        )
     ).then(
       modules => setModules(moduleArrayToMap(modules)),
       err => {

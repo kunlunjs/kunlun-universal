@@ -7,9 +7,13 @@ import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import type { StatSyncFn } from 'fs-extra'
 import { ClientOnly } from 'remix-utils'
+import { ReactMarkdownAlias as ReactMarkdown } from '~/components/react-markdown'
 import type { ExcludeFunctionProperties } from '~/interface/generic'
 import { convert } from '~/lib/markdown'
 import { request } from '~/lib/request'
+import { ModulerLoader } from '~/module.loader'
+// @ts-ignore
+import { getReactMarkdown } from '../../../esm-module'
 import type { NoteItems } from './index'
 
 export type NoteItem = {
@@ -20,16 +24,20 @@ export type NoteItem = {
 }
 
 type LoaderData = {
-  matter: NoteItems['notes'][number]['matter']
   html: string
+  markdown: string
+  matter: NoteItems['notes'][number]['matter']
 }
+
+const EXTRA_FILE_RULE =
+  /^<p>\{\{([\w-/]+\.(js|jsx|ts|tsx|json|html|css|less|scss|sass))(:\w+-\w+|:\w+|:-\w+)?\}\}<\/p>$/
 
 export const loader: LoaderFunction = async ({ params }) => {
   const response = await request.get(`/api/notes/${params.noteId}`)
   const data = response.data as NoteItem
   const html = await convert(data.content)
-  // console.log(html)
   return json<LoaderData>({
+    markdown: data.content,
     matter: data.matter,
     html: html
       .replace(
@@ -49,7 +57,7 @@ export const links: LinksFunction = () => {
 }
 
 export default function NoteByIdRoute() {
-  const { matter, html } = useLoaderData() as LoaderData
+  const { matter, html, markdown } = useLoaderData() as LoaderData
 
   const schema: NoteItems['notes'][number]['matter'] = {
     '@context': 'http://schema.org',
@@ -78,6 +86,7 @@ export default function NoteByIdRoute() {
       'width': 1200
     }
   }
+
   return (
     <ClientOnly fallback={<p>Loading...</p>}>
       {() => (
@@ -103,6 +112,9 @@ export default function NoteByIdRoute() {
                 <h1 className="mt-1">{matter.title}</h1>
               </header>
               <main dangerouslySetInnerHTML={{ __html: html }}></main>
+              <ModulerLoader imports={{ 'react-markdown': getReactMarkdown }}>
+                <ReactMarkdown>{markdown}</ReactMarkdown>
+              </ModulerLoader>
             </article>
           </div>
         </>

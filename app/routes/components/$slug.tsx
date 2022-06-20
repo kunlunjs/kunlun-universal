@@ -12,7 +12,7 @@ import { MDXRemote } from 'next-mdx-remote'
 import { toast, ToastContainer } from 'react-toastify'
 import { List } from '~/components/collection/List'
 import { ToastContext } from '~/context/toast'
-import type { Component, Components } from '~/interface/component'
+import type { KLComponent, KLComponents } from '~/interface/component'
 import type { FrontMatter } from '~/interface/frontmatter'
 import { getDirectory } from '~/lib/common'
 import globalStyles from '~/styles/global.css'
@@ -70,8 +70,8 @@ export default function ComponentSlug() {
   // console.log('LoaderData: ', `\n`, name, `\n`, source, `\n`, frontMatter)
   const { seo, spacing, components: items } = frontMatter
 
-  const componentsArray: Components = Object.entries(items).map(
-    ([key, value]): Component => {
+  const componentsArray: KLComponents = Object.entries(items).map(
+    ([key, value]): KLComponent => {
       return {
         id: key,
         title: value.title,

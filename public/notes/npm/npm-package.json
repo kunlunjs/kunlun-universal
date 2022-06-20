@@ -1,0 +1,124 @@
+{
+  "name": "",
+  "version": "",
+  "private": true,
+  "description": "",
+  "keywords": [],
+  "main": "入口 js 文件",
+  "module": "esm 格式入口文件",
+  "types": "TypeScript 类型定义文件入口",
+  "unpkg": "umd 格式入口文件",
+  "style": "样式文件入口",
+  "bin": {}, // 命令行
+  //--------------------------------------------------------
+  "publishConfig": {
+    "access": "public",
+    // 发布到 npm 市场的地址，默认 https://registry.npmjs.com/，可省略
+    "registry": "https://registry.npmjs.org/"
+  },
+  "files": ["发布到 npm 市场包含的目录"],
+  //--------------------------------------------------------
+  // "repository": "代码仓库地址",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "homepage": "项目主页",
+  "github": "",
+  "bugs": "",
+  //--------------------------------------------------------
+  "scripts": {},
+  //--------------------------------------------------------
+  "dependencies": {},
+  "peerDependencies": {
+    "prisma": "*",
+    // 指定版本号或范围
+    // "react": "^16.8.6 || ^17.0",
+    "react": ">=16.10.0"
+  },
+  "peerDependenciesMeta": {
+    "prisma": {
+      "optional": true
+    }
+  },
+  "devDependencies": {},
+  //--------------------------------------------------------
+  "engines": {
+    // 运行环境要求
+    "node": ">=8.0.0"
+  },
+  "sideEffects": true,
+  //--------------------------------------------------------
+  "authors": [],
+  "maitainers": [
+    {
+      "name": "",
+      "email": "",
+      "web": ""
+    }
+  ],
+  "license": "开源协议",
+  //--------------------------------------------------------
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
+  //--------------------------------------------------------
+  "browserslist": ["> 1%", "not edge <= 18", "not ie 11", "not op_mini all"],
+  "browserlist": {
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ],
+    "production": [">0.2%", "not dead", "not op_mini all"]
+  },
+  //--------------------------------------------------------
+  "eslintConfig": {
+    "overrides": [
+      {
+        "files": ["**/*.stories.*"],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
+    ]
+  },
+  //--------------------------------------------------------
+  "lint-staged": {
+    "*.+(ts|tsx)": ["yarn lint"]
+  },
+  //--------------------------------------------------------
+  "jest": {
+    "moduleNameMapper": {
+      "^@/(.+)": "<rootDir>/src/$1"
+    },
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/**/*.d.ts",
+      "!src/**/*.stories.{js,jsx,ts,tsx}",
+      "!src/test/**/*.{js,jsx,ts,tsx}"
+    ]
+  },
+  //--------------------------------------------------------
+  // TODO
+  "msw": {
+    "workerDirectory": "public"
+  },
+  //--------------------------------------------------------
+  // TODO
+  "resolutions": {
+    "babel-loader": "8.1.0"
+  },
+  //--------------------------------------------------------
+  "jam": {
+    "main": ""
+  },
+  //--------------------------------------------------------
+  "spm": {},
+  //--------------------------------------------------------
+  // https://www.npmjs.com/package/docpress
+  "docpress": {},
+  //--------------------------------------------------------
+  // TODO
+  "gitHead": ""
+}
