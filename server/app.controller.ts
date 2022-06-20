@@ -4,6 +4,7 @@ import { Controller, Get, Param } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { readdirSync, readFileSync, statSync } from 'fs-extra'
 import matter from 'gray-matter'
+import { EXTRA_FILE_RULE } from './utils'
 
 @Controller()
 export class AppController {
@@ -45,17 +46,36 @@ export class AppController {
   }
 
   @Get('notes/:id')
-  findNoteById(@Param('id') id: string) {
+  async findNoteById(@Param('id') id: string) {
     const file = resolve(process.cwd(), `public/notes/${id}.mdx`)
-    const { content, data } = matter(readFileSync(file).toString())
+    const matterResult = matter(readFileSync(file).toString())
+    const { data: matterInfo } = matterResult
+    const lines = matterResult.content.split(/\r?\n/)
+    for (const line of lines) {
+      const extraFile = line.trim().match(EXTRA_FILE_RULE)
+      if (extraFile) {
+        const [origin, realPath, suffix] = extraFile
+        const extraContent = readFileSync(
+          resolve(process.cwd(), `public/notes/${realPath}`)
+        ).toString()
+        matterResult.content = matterResult.content.replace(
+          origin,
+          `
+\`\`\`${suffix}
+${extraContent}
+\`\`\`
+        `
+        )
+      }
+    }
     const meta = statSync(file)
-    const matters: Record<string, any> = { title: `${id}.mdx`, ...data }
-    if (data?.tags) {
-      matters.tags = data.tags.split(' ')
+    const matters: Record<string, any> = { title: `${id}.mdx`, ...matterInfo }
+    if (matterInfo?.tags) {
+      matters.tags = matterInfo.tags.split(' ')
     }
-    if (data?.categories) {
-      matters.categories = data.categories.split(' ')
+    if (matterInfo?.categories) {
+      matters.categories = matterInfo.categories.split(' ')
     }
-    return { content, matter: matters, meta }
+    return { content: matterResult.content, matter: matters, meta }
   }
 }
