@@ -9,7 +9,7 @@ html {
 
 pre[class*='language-'] {
   /* @apply p-8 m-0 rounded-xl bg-gray-900 !important; */
-  @apply p-8 m-0 bg-gray-900 !important;
+  @apply m-0 border border-t-0 border-gray-500 bg-gray-50 p-8 font-sans !important;
 }
 
 .token:is(.property, .tag, .constant, .symbol, .deleted) {

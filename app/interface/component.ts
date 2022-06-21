@@ -1,5 +1,5 @@
 export interface KLComponent {
-  id?: string
+  id: string
   title: string
   spacing?: string
   tags?: string[]

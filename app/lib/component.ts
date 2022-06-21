@@ -16,3 +16,16 @@ export function source(html: string, spacing = 'relative') {
     </body>
   `
 }
+
+export function insertScriptAndStyles(
+  html: string,
+  spacing = 'relative',
+  scripts?: string,
+  styles?: string
+) {
+  return `
+    ${scripts ? `<script>${scripts}</script>\n` : ''}
+    ${styles ? `<style>${styles}</style>\n` : ''}
+    <body class="${spacing}">${html}</body>
+  `
+}
