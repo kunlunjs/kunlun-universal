@@ -2,16 +2,30 @@ import fs from 'fs'
 import { extname, join } from 'path'
 import matter from 'gray-matter'
 import type { KLComponentType } from '~/interface/component'
-import { getDirectory } from './common'
+import { getDataDirectory } from './common'
 
 /**
- * 默认读取 app/data/components 目录下文件名（含后缀）
+ * 默认读取 app/data/components 目录下文件名（含目录和后缀，最多 components 下一层目录）
  * @returns {String[]}
  * @example
- *   getComponentSlugs() => ['alter.mdx']
+ *   getComponentSlugs() => ['hyperui/alter.mdx', ...]
  */
-export function getComponentSlugs() {
-  return fs.readdirSync(getDirectory())
+export function getDataComponentSlugs() {
+  const dirs = fs.readdirSync(getDataDirectory('components'))
+  const result: string[] = []
+  dirs.forEach(dir => {
+    const fileOrDir = join(process.cwd(), `app/data/components/${dir}`)
+    if (fs.statSync(fileOrDir).isDirectory()) {
+      const subDirs = fs.readdirSync(fileOrDir)
+      subDirs.forEach(subDir => {
+        result.push(`${dir}/${subDir}`)
+      })
+    }
+    if (fs.statSync(fileOrDir).isFile()) {
+      result.push(fileOrDir)
+    }
+  })
+  return result
 }
 
 /**
@@ -20,12 +34,16 @@ export function getComponentSlugs() {
  * @param {String[]} fields 指定获取的 markdown/mdx matter 项
  * @returns {{[K in typeof fields[number]]: string | number | boolean}}
  * @example
- *   getComponentBySlug('alter.mdx', ['title','slug','icon','count','tags'])
- *     => { title: 'Alerts', slug: 'alerts', icon: '🚨', count: 1 }
+ *   getComponentBySlug('alter.mdx', ['title','slug','emoji','count','tags'])
+ *     => { title: 'Alerts', slug: 'hyperui/alerts', emoji: '🚨', count: 1 }
  */
-export function getComponentBySlug(slug: string, fields: string[] = []) {
+export function getDataComponentBySlug(slug: string, fields: string[] = []) {
+  // ex: hyperui/alters.mdx
   const realSlug = slug.replace(/\.mdx?$/, '')
-  const fullPath = join(getDirectory(), `${realSlug}${extname(slug)}`)
+  const fullPath = join(
+    getDataDirectory('components'),
+    `${realSlug}${extname(slug)}`
+  )
   const fileContents = fs.readFileSync(fullPath, 'utf8')
   const { data, content } = matter(fileContents)
 
@@ -53,15 +71,20 @@ export function getComponentBySlug(slug: string, fields: string[] = []) {
   return items
 }
 
-export function getComponents(
+/**
+ * 返回指定或所有 mdx 文件
+ * @param {String[]} fields
+ * @param {String} category
+ * @returns [{ title: 'Alerts', slug: 'hyperui/alerts', emoji: '🚨', count: 7 },...]
+ */
+export function getDataComponents(
   fields: string[] = [],
   category?: KLComponentType
 ) {
-  // [ 'alerts.mdx' ]
-  const slugs = getComponentSlugs()
-
-  // [ { title: 'Alerts', slug: 'alerts', icon: '🚨', count: 1 } ]
-  const components = slugs.map(slug => getComponentBySlug(slug, fields))
+  // [ 'hyperui/alerts.mdx', ... ]
+  const slugs = getDataComponentSlugs()
+  // [ { title: 'Alerts', slug: 'hyperui/alerts', emoji: '🚨', count: 1 } ]
+  const components = slugs.map(slug => getDataComponentBySlug(slug, fields))
 
   // 过滤掉某些类型的主键（非必要）
   if (!category) {

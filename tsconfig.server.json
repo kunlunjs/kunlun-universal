@@ -1,5 +1,4 @@
 {
-  "extends": "./tsconfig.json",
   "include": ["server"],
   "exclude": ["app"],
   "compilerOptions": {
@@ -10,7 +9,15 @@
       "~/*": ["./server/*"],
       "@/*": ["./server/*"]
     },
+    "isolatedModules": false,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
     "noEmit": false,
-    "outDir": "dist-server"
+    "outDir": "dist-server",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   }
 }

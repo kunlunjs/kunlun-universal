@@ -5,7 +5,7 @@ import type {
   MetaFunction
 } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+import { useLoaderData, useLocation } from '@remix-run/react'
 import fs from 'fs-extra'
 import matter from 'gray-matter'
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote'
@@ -16,7 +16,7 @@ import { List } from '~/components/collection/List'
 import { ToastContext } from '~/context/toast'
 import type { KLComponent, KLComponents } from '~/interface/component'
 import type { FrontMatter } from '~/interface/frontmatter'
-import { getDirectory } from '~/lib/common'
+import { getDataDirectory } from '~/lib/common'
 import globalStyles from '~/styles/global.css'
 
 type LoaderData = {
@@ -49,12 +49,19 @@ export const links: LinksFunction = () => {
 }
 
 export const loader: LoaderFunction = async ({ request, params, context }) => {
+  // slug: http://localhost:3000/components/alerts?dir=hyperui -> footers
   const { slug } = params
-  const source = fs
-    .readFileSync(path.resolve(getDirectory('components'), `${slug}.mdx`))
+  const { url } = request
+  const hasDir = url.match(/\?dir=([\w-_]+)$/)
+  const dir = hasDir ? `${hasDir[1]}/` : ''
+  const mdx = fs
+    .readFileSync(
+      path.resolve(getDataDirectory('components'), `${dir}${slug}.mdx`)
+    )
     .toString()
   // content 是原始 md/mdx 内容（不含matter），data 是解析的 matter 对象
-  const { content, data } = matter(source)
+  // data 是对应 mdx --- 之间解析出的 matter 信息
+  const { content, data } = matter(mdx)
   // NOTE: ES Module
   const { serialize } = await import('next-mdx-remote/serialize')
   const mdxSource = await serialize(content, {
@@ -65,7 +72,7 @@ export const loader: LoaderFunction = async ({ request, params, context }) => {
     scope: data
   })
   return json<LoaderData>({
-    name: slug!,
+    name: `${dir}${slug!}`,
     source: mdxSource,
     frontMatter: data as FrontMatter
   })

@@ -8,10 +8,12 @@ type CardProps = {
 }
 
 export const Card: FC<CardProps> = ({ item }) => {
-  const { title, slug, icon, count, tags } = item
+  const { title, slug, emoji, count, tags } = item
+  const splits = slug.split('/')
+  const [dir, file] = splits.length > 1 ? splits : [undefined, splits[0]]
 
   return (
-    <Link to={`/components/${slug}`}>
+    <Link to={`/components/${file}${dir ? `?dir=${dir}` : ''}`}>
       <div className="group relative block">
         <span
           className="absolute inset-0 rounded-lg border border-dashed border-black"
@@ -22,7 +24,7 @@ export const Card: FC<CardProps> = ({ item }) => {
           <div className="p-6">
             <div className="flex items-start justify-between">
               <span className="text-xl" role="img" aria-hidden="true">
-                {icon}
+                {emoji}
               </span>
 
               <Tags tags={tags} card={true} />

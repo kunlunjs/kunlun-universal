@@ -4,7 +4,7 @@ import type { FC } from 'react'
 import { useRef } from 'react'
 import { useCallback } from 'react'
 import { useEffect, useState } from 'react'
-// TODO: 服务端不可用
+// FIXME: 服务端不可用
 // import { useInView } from 'react-intersection-observer'
 import { IconLoading } from '~/components/icon/Loading'
 import type { KLComponent } from '~/interface/component'
@@ -156,7 +156,7 @@ export const Example: FC<ExampleProps> = ({ name, item, spacing }) => {
       ?.match(/\.(html|css|less|scss|sass|js|jsx|ts|tsx)$/)?.[1] || 'html'
 
   return (
-    <div className="-mt-20 pt-20" id={slug}>
+    <div /* ref={ref} */ className="-mt-20 pt-20" id={slug}>
       <Tags tags={tags} />
       <div className="space-y-4">
         <div className="flex items-center justify-between">
@@ -233,7 +233,7 @@ export const Example: FC<ExampleProps> = ({ name, item, spacing }) => {
                       onClick={() => handleTab(tab)}
                     >
                       {tab === activeTab && (
-                        <span className="absolute inset-x-0 -bottom-px h-[4px] w-full bg-orange-500"></span>
+                        <span className="absolute inset-x-0 -bottom-px h-[2px] w-full bg-orange-500"></span>
                       )}
                       <div className="flex items-center justify-center px-2">
                         <svg
@@ -263,7 +263,7 @@ export const Example: FC<ExampleProps> = ({ name, item, spacing }) => {
                 <div>
                   <pre className="h-[200px] overflow-auto p-4 lg:h-[372px]">
                     <code className={`language-${suffix}`}>
-                      {codeRef.current[activeTab]}
+                      {Array.isArray(item) ? codeRef.current[activeTab] : code}
                     </code>
                   </pre>
                 </div>

@@ -3,7 +3,7 @@ import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { Grid } from '~/components/collection/Grid'
 import type { KLComponentCard } from '~/interface/component'
-import { getComponents } from '~/lib/components'
+import { getDataComponents } from '~/lib/components'
 
 type LoaderData = {
   components: Array<KLComponentCard>
@@ -13,18 +13,18 @@ export const loader: LoaderFunction = async ({ request, params, context }) => {
   const componentData = [
     'title',
     'slug',
-    'icon',
+    'emoji',
     'count',
     'ecommerce',
     'application',
     'tags'
   ]
-  const components = getComponents(componentData)
+  const components = getDataComponents(componentData)
   return json({ components })
 }
 
 export default function Home() {
-  // {components: [{title: 'Alerts', slug: 'alerts', icon: '🚨', count: 1}]}
+  // {components: [{title: 'Alerts', slug: 'alerts', emoji: '🚨', count: 7}, ...]}
   const data = useLoaderData() as LoaderData
 
   return (
