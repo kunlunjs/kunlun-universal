@@ -16,6 +16,19 @@ export class AppController {
     return []
   }
 
+  @Get('components/:category')
+  async findManyComponents(@Param('category') category: string) {
+    const dir = resolve(process.cwd(), `public/components/${category}`)
+    if (statSync(dir).isDirectory()) {
+      const files = readdirSync(dir)
+      const names = [...new Set(files.map(i => {
+        return i.split('.')[0]
+      }))]
+      return {names, files}
+    }
+    return []
+  }
+
   @Get('notes')
   findManyNotes() {
     const dir = resolve(process.cwd(), 'public/notes')

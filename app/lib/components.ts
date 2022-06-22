@@ -83,7 +83,8 @@ export function getDataComponents(
 ) {
   // [ 'hyperui/alerts.mdx', ... ]
   const slugs = getDataComponentSlugs()
-  // [ { title: 'Alerts', slug: 'hyperui/alerts', emoji: '🚨', count: 1 } ]
+
+  // [ { title: 'Alerts', slug: 'hyperui/alerts', emoji: '🚨', count: 1 },... ]
   const components = slugs.map(slug => getDataComponentBySlug(slug, fields))
 
   // 过滤掉某些类型的主键（非必要）

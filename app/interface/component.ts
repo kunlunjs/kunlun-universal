@@ -1,8 +1,8 @@
 export interface KLComponent {
   id: string
   title: string
-  spacing?: string
   tags?: string[]
+  spacing?: string
 }
 
 export type KLComponents = Array<KLComponent>

@@ -19,7 +19,9 @@ export const loader: LoaderFunction = async ({ request, params, context }) => {
     'application',
     'tags'
   ]
+  // [{ title: 'Alerts', slug: 'hyperui/alerts', emoji: '🚨', count: 7 },...]
   const components = getDataComponents(componentData)
+
   return json({ components })
 }
 

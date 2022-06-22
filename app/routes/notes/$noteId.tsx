@@ -30,7 +30,7 @@ type LoaderData = {
 }
 
 export const loader: LoaderFunction = async ({ params }) => {
-  const response = await request.get(`/api/notes/${params.noteId}`)
+  const response = await request.get(`/notes/${params.noteId}`)
   const data = response.data as NoteItem
   const html = await convert(data.content)
   return json<LoaderData>({

@@ -20,7 +20,8 @@ type ExampleProps = {
   spacing: string
 }
 
-// app/data/components/alters.mdx: { name: 'alerts', item: { id: '1', spacing: false, tags: [], title: 'Simple' }, spacing: 'flex flex-col gap-4 max-w-sm mx-auto p-8' }
+// app/data/components/hyperui/alters.mdx: { name: 'hyperui/alerts', item: { id: '1', spacing: false, tags: [], title: 'Simple' }, spacing: 'flex flex-col gap-4 max-w-sm mx-auto p-8' }
+// app/data/components/css-secrets/$dynamic.mdx: { name: 'css-secrets', item: [{ id: 'ampersands', spacing: false, tags: [], title: 'Ampersands' }], spacing: '' }
 export const Example: FC<ExampleProps> = ({ name, item, spacing }) => {
   const codeRef = useRef<Record<string, string>>({})
   const [code, setCode] = useState<string>()
@@ -41,7 +42,7 @@ export const Example: FC<ExampleProps> = ({ name, item, spacing }) => {
 
   let id: string
   let title: string
-  let space: string | undefined
+  let space: string | boolean | undefined
   let tags: string[] = []
   if (Array.isArray(item)) {
     title = item[0].title
