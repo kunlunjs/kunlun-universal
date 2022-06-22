@@ -10,7 +10,7 @@ export type KLComponents = Array<KLComponent>
 export interface KLComponentPage {
   title: string
   slug: string
-  icon?: string
+  emoji?: string
   spacing?: string
   components?: KLComponents
 }
@@ -21,7 +21,7 @@ export interface KLComponentCard {
   // [k: string]: any
   title: string
   slug: string
-  icon: string
+  emoji: string
   count: number
   tags?: string[]
   categories: string[]
