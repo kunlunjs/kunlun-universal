@@ -1,0 +1,16 @@
+/**
+ * Color tinting — with blending modes
+ */
+
+.tinted-image {
+  width: 640px;
+  height: 440px;
+  background-size: cover;
+  background-color: hsl(335, 100%, 50%);
+  background-blend-mode: luminosity;
+  transition: 0.5s background-color;
+}
+
+.tinted-image:hover {
+  background-color: transparent;
+}

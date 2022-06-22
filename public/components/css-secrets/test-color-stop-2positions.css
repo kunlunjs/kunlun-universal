@@ -1,0 +1,12 @@
+/**
+ * Test: color stops with two locations
+ * PASS if green stripes, FAIL if red
+ */
+
+background: red;
+background: repeating-linear-gradient(
+  -45deg,
+  limegreen 0 20px,
+  green 20px 60px
+);
+min-height: 100%;

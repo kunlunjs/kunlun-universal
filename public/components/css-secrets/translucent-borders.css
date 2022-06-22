@@ -3,16 +3,17 @@
  */
 
 body {
-	background: url('http://csssecrets.io/images/stone-art.jpg');
+  background: url('http://csssecrets.io/images/stone-art.jpg');
 }
 
 div {
-	/* styling */
-	max-width: 20em;
-	margin: 2em auto 0;
-	padding: 2em;
-	font: 100%/1.5 sans-serif;
-	background: white;
-	background-clip: padding-box;
-	border: 10px solid hsl(0deg 0% 100% / 50%);
+  border: 10px solid hsla(0, 0%, 100%, 0.5);
+  background: white;
+  background-clip: padding-box;
+
+  /* styling */
+  max-width: 20em;
+  padding: 2em;
+  margin: 2em auto 0;
+  font: 100%/1.5 sans-serif;
 }

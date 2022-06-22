@@ -1,0 +1,10 @@
+/**
+ * One-sided shadow
+ */
+
+div {
+  width: 1.6in;
+  height: 1in;
+  background: #fb3;
+  box-shadow: 0 5px 4px -4px black;
+}

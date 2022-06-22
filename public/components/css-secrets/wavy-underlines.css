@@ -1,0 +1,23 @@
+/**
+ * Wavy underlines
+ */
+
+body {
+  font: 250%/1.6 Baskerville, Palatino, serif;
+}
+
+a {
+  background: linear-gradient(
+        -45deg,
+        transparent 40%,
+        red 0,
+        red 60%,
+        transparent 0
+      )
+      0 1em,
+    linear-gradient(45deg, transparent 40%, red 0, red 60%, transparent 0) 0.1em
+      1em;
+  background-repeat: repeat-x;
+  background-size: 0.2em 0.1em;
+  text-shadow: 0.05em 0 white, -0.05em 0 white;
+}

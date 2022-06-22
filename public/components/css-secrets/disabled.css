@@ -1,0 +1,9 @@
+/**
+ * Indicating disabled state
+ */
+
+:disabled,
+[disabled],
+[aria-disabled='true'] {
+  cursor: not-allowed;
+}

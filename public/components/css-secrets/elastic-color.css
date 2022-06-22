@@ -1,0 +1,12 @@
+/**
+ * Elastic color
+ */
+
+html {
+  background: rgb(100%, 0%, 40%);
+  transition: 1s cubic-bezier(0.25, 0.1, 0.2, 3);
+}
+
+html:hover {
+  background: gray;
+}
