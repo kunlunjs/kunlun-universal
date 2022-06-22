@@ -3,6 +3,8 @@
  * PASS if green gradient, FAIL if red.
  */
 
-background: red;
-background: conic-gradient(limegreen, green, limegreen);
-min-height: 100%;
+body {
+  background: red;
+  background: conic-gradient(limegreen, green, limegreen);
+  min-height: 100%;
+}

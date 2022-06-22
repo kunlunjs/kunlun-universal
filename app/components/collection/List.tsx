@@ -1,6 +1,7 @@
 import { useLocation } from '@remix-run/react'
 import { capitalize } from 'lodash'
-import { FC, useEffect, useState } from 'react'
+import type { FC } from 'react'
+import { useEffect, useState } from 'react'
 import { ClientOnly } from 'remix-utils'
 import type { KLComponent } from '~/interface/component'
 import { request } from '~/lib/request'
@@ -20,7 +21,7 @@ export const List: FC<ListProps> = ({ name, items, spacing }) => {
   const [state, setState] = useState<KLComponent[]>(items)
 
   // ex: /components/$dynamic?dir=css-secrets
-  const dir = search?.match(/\?dir=([\w-]+)$/)
+  const dir = search?.match(/\?dir=([\w-]+)/)
   const realName = name.endsWith('$dynamic') && dir ? dir[1] : name
 
   useEffect(() => {
@@ -29,14 +30,18 @@ export const List: FC<ListProps> = ({ name, items, spacing }) => {
       const { data } = res
       // ex: ['ampersands.css', 'ampersands.html',...]
       if (Array.isArray(data.names)) {
-        const chunkByName: any = [];
-        (data.names as string[]).forEach(i => {
-          chunkByName.push((data.files as string[]).filter(file => file.match(new RegExp(`^${i}\.(html|css|js)`))).map(j => ({
-            id: j,
-            title: capitalize(i.split(/[-_]/).join(' ')),
-            spacing: '',
-            tags: []
-          })))
+        const chunkByName: any = []
+        ;(data.names as string[]).forEach(i => {
+          chunkByName.push(
+            (data.files as string[])
+              .filter(file => file.match(new RegExp(`^${i}.(html|css|js)`)))
+              .map(j => ({
+                id: j,
+                title: capitalize(i.split(/[-_]/).join(' ')),
+                spacing: '',
+                tags: []
+              }))
+          )
         })
         setState(chunkByName)
       }
@@ -53,8 +58,8 @@ export const List: FC<ListProps> = ({ name, items, spacing }) => {
         return (
           <div className="not-prose mt-16 lg:mt-24 xl:max-w-[1348px]">
             <ul className="space-y-16">
-              {state.map(item => (
-                <li key={item.id}>
+              {state.map((item, ix) => (
+                <li key={`${item.id}.${ix}`}>
                   <Example name={realName} item={item} spacing={spacing} />
                 </li>
               ))}

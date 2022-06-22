@@ -24,7 +24,7 @@ export function insertScriptAndStyles(
   styles?: string
 ) {
   return `
-    ${scripts ? `<script>${scripts}</script>\n` : ''}
+    ${scripts ? `<script type="text/javascript">${scripts}</script>\n` : ''}
     ${styles ? `<style>${styles}</style>\n` : ''}
     <body class="${spacing}">${html}</body>
   `

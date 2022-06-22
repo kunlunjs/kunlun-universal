@@ -2,5 +2,7 @@
  * Horizontal stripes
  */
 
-background: linear-gradient(#fb3 50%, #58a 0);
-background-size: 100% 30px;
+body {
+  background: linear-gradient(#fb3 50%, #58a 0);
+  background-size: 100% 30px;
+}

@@ -52,7 +52,7 @@ export const loader: LoaderFunction = async ({ request, params, context }) => {
   // slug: http://localhost:3000/components/alerts?dir=hyperui -> footers
   const { slug } = params
   const { url } = request
-  const hasDir = url.match(/\?dir=([\w-_]+)$/)
+  const hasDir = url.match(/\?dir=([\w-_]+)/)
   const dir = hasDir ? `${hasDir[1]}/` : ''
   const mdx = fs
     .readFileSync(
