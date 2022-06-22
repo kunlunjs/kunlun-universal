@@ -5,7 +5,7 @@ import type {
   MetaFunction
 } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { useLoaderData, useLocation } from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
 import fs from 'fs-extra'
 import matter from 'gray-matter'
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote'
@@ -71,6 +71,7 @@ export const loader: LoaderFunction = async ({ request, params, context }) => {
     },
     scope: data
   })
+
   return json<LoaderData>({
     name: `${dir}${slug!}`,
     source: mdxSource,
@@ -83,16 +84,16 @@ export default function ComponentSlug() {
   const { source, name, frontMatter } = useLoaderData() as LoaderData
   const { seo, spacing, components: items } = frontMatter
 
-  const componentsArray: KLComponents = Object.entries(items).map(
-    ([key, value]): KLComponent => {
-      return {
-        id: key,
-        title: value.title,
-        tags: value.tags ?? [],
-        spacing: value.spacing ?? false
-      }
-    }
-  )
+  const componentsArray: KLComponents = items
+    ? Object.entries(items).map(([key, value]): KLComponent => {
+        return {
+          id: key,
+          title: value.title,
+          tags: value.tags ?? [],
+          spacing: value.spacing ?? false
+        }
+      })
+    : []
 
   const data = {
     name,

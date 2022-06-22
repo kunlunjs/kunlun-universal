@@ -60,7 +60,7 @@ export function getDataComponentBySlug(slug: string, fields: string[] = []) {
     if (field === 'slug') {
       items[field] = realSlug
     }
-    if (field === 'count') {
+    if (field === 'count' && data.components) {
       items[field] = Object.keys(data.components).length
     }
     if (typeof data[field] !== 'undefined') {
