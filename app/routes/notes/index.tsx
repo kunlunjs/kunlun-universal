@@ -70,7 +70,7 @@ export type NoteItems = {
 }
 
 export const loader: LoaderFunction = async () => {
-  const response = await request.get('/api/notes')
+  const response = await request.get('/notes')
   const notes = response.data as NoteItems['notes']
   // for (const note of notes) {
   //   const title = await convert(note.matter.title)
