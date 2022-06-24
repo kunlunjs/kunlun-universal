@@ -4,13 +4,13 @@ import { Authenticator } from 'remix-auth'
 import type { GitHubExtraParams, GitHubProfile } from 'remix-auth-github'
 import { GitHubStrategy } from 'remix-auth-github'
 
-if (!process.env.GITHUB_CLIENT_ID) {
-  throw new Error('GITHUB_CLIENT_ID is required')
-}
+// if (!process.env.GITHUB_CLIENT_ID) {
+//   throw new Error('GITHUB_CLIENT_ID is required')
+// }
 
-if (!process.env.GITHUB_CLIENT_SECRET) {
-  throw new Error('GITHUB_CLIENT_SECRET is required')
-}
+// if (!process.env.GITHUB_CLIENT_SECRET) {
+//   throw new Error('GITHUB_CLIENT_SECRET is required')
+// }
 
 const BASE_URL = process.env.BASE_URL
 
